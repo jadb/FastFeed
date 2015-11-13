@@ -18,30 +18,17 @@ class FastFeedLoggerTest extends AbstractFastFeedTest
 {
     public function testFetch()
     {
-        $responseMock = $this->getMockBuilder('Guzzle\Http\Message\Response')
+        $responseMock = $this->getMockBuilder('GuzzleHttp\Psr7\Response')
             ->disableOriginalConstructor()
             ->getMock();
-
-        $responseMock
-            ->expects($this->once())
-            ->method('isSuccessful')
-            ->will($this->returnValue(false));
 
         $responseMock->expects($this->once())
             ->method('getStatusCode')
             ->will($this->returnValue(500));
 
-        $requestMock = $this->getMockBuilder('Guzzle\Http\Message\Request')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $requestMock->expects($this->once())
-            ->method('send')
-            ->will($this->returnValue($responseMock));
-
         $this->httpMock->expects($this->once())
-            ->method('get')
-            ->will($this->returnValue($requestMock));
+            ->method('__call')
+            ->will($this->returnValue($responseMock));
 
         $this->loggerMock->expects($this->once())
             ->method('log')

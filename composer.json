@@ -15,12 +15,14 @@
     },
     "require": {
         "php": ">=5.4.8",
-        "psr/log": "~1.0",
         "desarrolla2/cache": ">=1.0.0",
-        "fastfeed/url": ">=0.1.0",
         "ezyang/htmlpurifier": "4.6.*",
-        "guzzle/guzzle": "~3.7",
-        "egeloen/http-adapter": "~0"
+        "fastfeed/url": ">=0.1.0",
+        "guzzlehttp/guzzle": "~6.0",
+        "psr/log": "~1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^4.0"
     },
     "autoload": {
         "psr-4": {

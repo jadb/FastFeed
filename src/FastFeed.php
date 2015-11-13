@@ -13,12 +13,7 @@
 
 namespace FastFeed;
 
-use Ivory\HttpAdapter\HttpAdapterInterface;
-use Ivory\HttpAdapter\Message\InternalRequest;
-use Ivory\HttpAdapter\Message\Request;
-use Ivory\HttpAdapter\MultiHttpAdapterException;
-
-use Guzzle\Http\ClientInterface;
+use GuzzleHttp\ClientInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 
@@ -67,10 +62,10 @@ class FastFeed implements FastFeedInterface
     protected $feeds = array();
 
     /**
-     * @param ClientInterface $guzzle
+     * @param ClientInterface $http
      * @param LoggerInterface $logger
      */
-    public function __construct(HttpAdapterInterface $http, LoggerInterface $logger)
+    public function __construct(ClientInterface $http, LoggerInterface $logger)
     {
         $this->http = $http;
         $this->logger = $logger;
@@ -226,20 +221,18 @@ class FastFeed implements FastFeedInterface
      */
     protected function get($url)
     {
-        $request = $this->http->get(
+        $response = $this->http->get(
             $url,
             array('User-Agent' => self::USER_AGENT.' v.'.self::VERSION)
         );
 
-        $response = $request->send();
-
-        if (!$response->isSuccessful()) {
-            $this->log('fail with '.$response->getStatusCode().' http code in url "'.$url.'" ');
-
+        $code = $response->getStatusCode();
+        if ($code >= 400) {
+            $this->log('fail with ' . $code . ' http code in url "' . $url . '" ');
             return;
         }
-        $this->logger->log(LogLevel::INFO, 'retrieved url "'.$url.'" ');
 
+        $this->logger->log(LogLevel::INFO, 'retrieved url "' . $url . '" ');
         return $response->getBody();
     }
 

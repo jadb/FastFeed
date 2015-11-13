@@ -13,6 +13,7 @@
 
 namespace FastFeed;
 
+use GuzzleHttp\Client;
 use Ivory\HttpAdapter\HttpAdapterFactory;
 
 use FastFeed\Logger\Logger;
@@ -29,7 +30,7 @@ abstract class Factory
      */
     public static function create()
     {
-        $fastFeed = new FastFeed(HttpAdapterFactory::create('guzzle'), new Logger(false));
+        $fastFeed = new FastFeed(new Client(), new Logger(false));
         $fastFeed->pushParser(new RSSParser());
         $fastFeed->pushParser(new AtomParser());
 

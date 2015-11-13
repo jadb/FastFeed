@@ -33,7 +33,7 @@ abstract class AbstractFastFeedTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->httpMock = $this->getMockBuilder('Ivory\HttpAdapter\GuzzleHttpAdapter')
+        $this->httpMock = $this->getMockBuilder('GuzzleHttp\Client')
             ->disableOriginalConstructor()
             ->getMock();
 
