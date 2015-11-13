@@ -28,5 +28,10 @@
             "FastFeed\\Tests\\": "tests/"
         }
     },
-    "minimum-stability": "dev"
+    "minimum-stability": "dev",
+    "extra": {
+        "branch-alias": {
+            "dev-0.2": "0.2.x-dev"
+        }
+    }
 }
